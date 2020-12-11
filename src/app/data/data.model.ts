@@ -6,5 +6,4 @@ export interface Data {
     name: string;
     description: string;
     parent: string;
-    parentId: string;
 }

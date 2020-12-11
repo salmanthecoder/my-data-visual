@@ -1,13 +1,13 @@
 {
   "name": "my-data-visual",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start-local": "ng serve",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint my-data-visual",
     "e2e": "ng e2e"
   },
   "private": true,

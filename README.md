@@ -50,14 +50,15 @@ In the project directory, you can run:
 
 npm install - To install all the dependencies
 
+npm run build
+Run npm build because express server is serving data from dist folder
+
 npm run start
 Runs the app in the development mode.
 
 npm run test
 Launches the test runner in the interactive watch mode.
 
-npm run build
-Builds the app for production to the build folder.
 
 # MyDataVisual
 
@@ -65,5 +66,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 Run npm install in project directory
+Run npm build because express server is serving data from dist folder
 Run `npm run start` for a dev server. Navigate to `http://localhost:8080/`.
 

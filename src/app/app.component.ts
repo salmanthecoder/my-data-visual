@@ -14,7 +14,9 @@ export class AppComponent {
 
   constructor(private treeService: TreeService) {}
 
+  /*eslint-disable */
   ngOnInit(): void {
+  /*eslint-enable */
     // call the service to get the data
     this.data = this.treeService.getData();
   }

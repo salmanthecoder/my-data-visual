@@ -58,17 +58,11 @@ export class MyTreeComponent implements OnChanges {
     // convert the flat data into a hierarchy
     const treeData = d3
       .stratify()
-      .id(function (d: any) {
-        return d.name;
-      })
-      .parentId(function (d: any) {
-        return d.parent;
-      })(data);
+      .id((d: any)=> d.name)
+      .parentId((d: any)=> d.parent)(data);
 
     // assign the name to each node
-    treeData.each(function (d: any) {
-      d.name = d.id;
-    });
+    treeData.each((d: any)=> d.name = d.id);
 
     // set the dimensions and margins of the diagram
     const margin = { top: 20, right: 90, bottom: 30, left: 90 };
@@ -79,9 +73,7 @@ export class MyTreeComponent implements OnChanges {
     const treemap = d3.tree().size([height, width]);
 
     //  assigns the data to a hierarchy using parent-child relationships
-    let nodes = d3.hierarchy(treeData, function (d: any) {
-      return d.children;
-    });
+    let nodes = d3.hierarchy(treeData, (d: any)=> d.children);
 
     // maps the node data to the tree layout
     nodes = treemap(nodes);
@@ -105,7 +97,9 @@ export class MyTreeComponent implements OnChanges {
       .enter()
       .append('path')
       .attr('class', 'link')
-      .attr('d', function (d: any) {
+      /*eslint-disable */
+      .attr('d', (d: any)=> {
+        /*eslint-enable */
         return (
           'M' +
           d.y +
@@ -132,18 +126,15 @@ export class MyTreeComponent implements OnChanges {
       .data(nodes.descendants())
       .enter()
       .append('g')
-      //.on('click', this.showDialog.bind(this), data)
-      .on('click', function (d, data) {
+      /*eslint-disable */
+      .on('click', function(d, data) {
+        /*eslint-enable */
         const self = d3.select(this);
         self.style('stroke', 'red');
         angularContext.showDialog(this, data);
       })
-      .attr('class', function (d) {
-        return 'node' + (d.children ? ' node--internal' : ' node--leaf');
-      })
-      .attr('transform', function (d: any) {
-        return 'translate(' + d.y + ',' + d.x + ')';
-      });
+      .attr('class', (d)=> 'node' + (d.children ? ' node--internal' : ' node--leaf'))
+      .attr('transform', (d: any)=>'translate(' + d.y + ',' + d.x + ')');
 
     node
       .append('rect')
@@ -157,14 +148,8 @@ export class MyTreeComponent implements OnChanges {
     node
       .append('text')
       .attr('dy', '.35em')
-      .attr('x', function (d) {
-        return 15;
-      })
-      .style('text-anchor', function (d) {
-        return d.children ? 'start' : 'start';
-      })
-      .text(function (d) {
-        return d.data.name;
-      });
+      .attr('x', d=>15)
+      .style('text-anchor',d=> d.children ? 'start' : 'start')
+      .text(d=> d.data.name);
   }
 }

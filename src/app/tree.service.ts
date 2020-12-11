@@ -10,7 +10,7 @@ export class TreeService {
 
   constructor(private http: HttpClient) { }
 
-  getData():Observable<DataModel> {
+  getData(): Observable<DataModel> {
     return this.http.get<DataModel>('/api/data');
   }
 }

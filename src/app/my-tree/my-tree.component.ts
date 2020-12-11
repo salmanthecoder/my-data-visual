@@ -36,7 +36,6 @@ export class MyTreeComponent implements OnChanges {
   }
 
   showDialog(event, node) {
-    debugger;
     const dialogRef = this.dialog.open(NodeDetailsComponent, {
       width: '450px',
       height: '200px',
@@ -45,7 +44,7 @@ export class MyTreeComponent implements OnChanges {
         description: node.data.data.description,
       },
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.createTree(this);
     });
   }
@@ -59,28 +58,28 @@ export class MyTreeComponent implements OnChanges {
     // convert the flat data into a hierarchy
     const treeData = d3
       .stratify()
-      .id(function(d: any) {
+      .id(function (d: any) {
         return d.name;
       })
-      .parentId(function(d: any) {
+      .parentId(function (d: any) {
         return d.parent;
       })(data);
 
     // assign the name to each node
-    treeData.each(function(d: any) {
+    treeData.each(function (d: any) {
       d.name = d.id;
     });
 
     // set the dimensions and margins of the diagram
-    const margin = { top: 20, right: 90, bottom: 30, left: 90 },
-      width = 660 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+    const margin = { top: 20, right: 90, bottom: 30, left: 90 };
+    const width = 660 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
 
     // declares a tree layout and assigns the size
     const treemap = d3.tree().size([height, width]);
 
     //  assigns the data to a hierarchy using parent-child relationships
-    let nodes = d3.hierarchy(treeData, function(d: any) {
+    let nodes = d3.hierarchy(treeData, function (d: any) {
       return d.children;
     });
 
@@ -91,13 +90,13 @@ export class MyTreeComponent implements OnChanges {
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
     const svg = d3
-        .select(element)
-        .append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom),
-      g = svg
-        .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+      .select(element)
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom);
+    const g = svg
+      .append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     // adds the links between the nodes
     const link = g
@@ -106,7 +105,7 @@ export class MyTreeComponent implements OnChanges {
       .enter()
       .append('path')
       .attr('class', 'link')
-      .attr('d', function(d: any) {
+      .attr('d', function (d: any) {
         return (
           'M' +
           d.y +
@@ -134,15 +133,15 @@ export class MyTreeComponent implements OnChanges {
       .enter()
       .append('g')
       //.on('click', this.showDialog.bind(this), data)
-      .on("click", function(d, data) {
+      .on('click', function (d, data) {
         const self = d3.select(this);
-          self.style("stroke", "red");
-          angularContext.showDialog(this, data);
+        self.style('stroke', 'red');
+        angularContext.showDialog(this, data);
       })
-      .attr('class', function(d) {
+      .attr('class', function (d) {
         return 'node' + (d.children ? ' node--internal' : ' node--leaf');
       })
-      .attr('transform', function(d: any) {
+      .attr('transform', function (d: any) {
         return 'translate(' + d.y + ',' + d.x + ')';
       });
 
@@ -158,13 +157,13 @@ export class MyTreeComponent implements OnChanges {
     node
       .append('text')
       .attr('dy', '.35em')
-      .attr('x', function(d) {
+      .attr('x', function (d) {
         return 15;
       })
-      .style('text-anchor', function(d) {
+      .style('text-anchor', function (d) {
         return d.children ? 'start' : 'start';
       })
-      .text(function(d) {
+      .text(function (d) {
         return d.data.name;
       });
   }
